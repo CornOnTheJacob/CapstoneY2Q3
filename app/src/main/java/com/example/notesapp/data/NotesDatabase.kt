@@ -8,18 +8,18 @@ import androidx.room.Room
 
 // A room database that allows the data to persist
 @Database(entities = [Notes::class], version = 1, exportSchema = false)
-abstract class NoteDatabase : RoomDatabase() {
+abstract class NotesDatabase : RoomDatabase() {
     abstract fun notesDao(): NotesDao
 
     companion object {
         @Volatile
-        private var INSTANCE: NoteDatabase? = null
+        private var INSTANCE: NotesDatabase? = null
 
         // Synchronizes data
         fun getDatabase(context: Context) = INSTANCE ?: synchronized(this) {
             Room.databaseBuilder(
                 context.applicationContext,
-                NoteDatabase::class.java,
+                NotesDatabase::class.java,
                 "notes_database"
             ).build().apply {
                 INSTANCE = this

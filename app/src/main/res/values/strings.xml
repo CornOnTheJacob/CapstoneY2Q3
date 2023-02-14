@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NotesApp</string>
+    <string name="home_name">Notes Home - Mousser</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
