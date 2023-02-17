@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
 
         binding.apply {
             recyclerview.adapter = adapter
-            addNoteButton.setOnClickListener {
+            floatingActionButton.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_homeFragment_to_addNoteFragment
                 )
