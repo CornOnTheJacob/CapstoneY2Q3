@@ -67,8 +67,8 @@ class NotesViewModel(
         }
     }
 
-    fun isValidEntry(title: String): Boolean {
-        return title.isNotBlank()
+    fun isValidEntry(title: String, password: String): Boolean {
+        return title.isNotBlank() && password.isNotBlank()
     }
 }
 

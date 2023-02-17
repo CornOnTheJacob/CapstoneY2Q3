@@ -16,8 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
-        android:name="com.example.notesapp.fragments.HomeFragment"
-        android:label="@string/home_name"
-        tools:layout="@layout/fragment_home">
+        android:name="com.example.notesapp.fragments.AddNoteFragment"
+        android:label="@string/add_note_name"
+        tools:layout="@layout/fragment_add_note">
+        <argument
+            android:name="id"
+            app:argType="long"
+            android:defaultValue="0L"/>
     </fragment>
 </navigation>
