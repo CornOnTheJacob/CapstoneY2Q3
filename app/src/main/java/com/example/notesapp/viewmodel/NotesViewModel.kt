@@ -20,15 +20,15 @@ class NotesViewModel(
         title: String,
         lastAccessed: String,
         securityStatus: Boolean,
-        password: String,
-        notes: String
+        notes: String,
+        password: String?
     ) {
         val note = Notes(
             title = title,
             lastAccessed = lastAccessed,
             securityStatus = securityStatus,
-            password = password,
-            notes = notes
+            notes = notes,
+            password = password
         )
 
         // Launches a coroutine and calls the DAO method to add a Notes to the database within it
@@ -43,16 +43,16 @@ class NotesViewModel(
         title: String,
         lastAccessed: String,
         securityStatus: Boolean,
-        password: String,
-        notes: String
+        notes: String,
+        password: String
     ) {
         val note = Notes(
             id = id,
             title = title,
             lastAccessed = lastAccessed,
             securityStatus = securityStatus,
-            password = password,
-            notes = notes
+            notes = notes,
+            password = password
         )
         viewModelScope.launch(Dispatchers.IO) {
             notesDao.update(note)
@@ -62,13 +62,13 @@ class NotesViewModel(
     // Deletes a specified note
     fun deleteNote(note: Notes) {
         viewModelScope.launch(Dispatchers.IO) {
-            // TODO: call the DAO method to delete a forageable to the database here
+            // Calls the DAO method to delete a note in the database
             notesDao.delete(note)
         }
     }
 
-    fun isValidEntry(title: String, password: String): Boolean {
-        return title.isNotBlank() && password.isNotBlank()
+    fun isValidEntry(title: String): Boolean {
+        return title.isNotBlank()
     }
 }
 

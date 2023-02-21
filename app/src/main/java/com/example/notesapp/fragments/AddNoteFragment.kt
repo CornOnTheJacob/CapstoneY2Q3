@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,17 +22,23 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+import androidx.navigation.fragment.navArgs
 import kotlin.collections.ArrayList
 
+
+/*
+    Fragment that adds new notes to the view model
+ */
 class AddNoteFragment : Fragment() {
-
-    //private val navigationArgs: AddNoteFragmentArgs by navArgs()
-
-    private var _binding: FragmentAddNoteBinding? = null
 
     private lateinit var notes: Notes
 
+    // Sets up fragment binding
+    private var _binding: FragmentAddNoteBinding? = null
     private val binding get() = _binding!!
+
+    //private val navigationArgs: AddNoteFragmentArgs by navArgs()
+
 
     // Refactor creation of view model to take an instance of NotesViewModelFactory
     private val viewModel: NotesViewModel by activityViewModels {
@@ -48,9 +55,11 @@ class AddNoteFragment : Fragment() {
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Adds a new note when the create button is clicked
         binding.createButton.setOnClickListener {
             addNote()
         }
@@ -78,32 +87,77 @@ class AddNoteFragment : Fragment() {
          */
     }
 
+    // Function adds note to view model
     private fun addNote() {
         if (isValidEntry()) {
+
+            // Gets current date
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
+
+            // Checks which radio button is chosen (yes or no)
             var securityStatus: Boolean = false
             if (binding.yesSecurity.isChecked) {
                 securityStatus = true
             }
+
+            // Adds a new note to the view model
             viewModel.addNote(
                 binding.nameInput.text.toString(),
                 currentDate,
                 securityStatus,
                 binding.passcodeInput.text.toString(),
-                ""
-            )
-            /*
-            findNavController().navigate(
-                R.id.action_addForageableFragment_to_forageableListFragment
+                "grgbtht"
             )
 
-             */
+            findNavController().navigate(
+                R.id.action_addNoteFragment_to_homeFragment
+            )
         }
     }
 
+    // Function deletes note from view model
+    private fun deleteNote(note: Notes) {
+        viewModel.deleteNote(note)
+        findNavController().navigate(
+            R.id.action_addNoteFragment_to_homeFragment
+        )
+    }
+
+    // Updates note in view model
+    private fun updateForageable() {
+        if (isValidEntry()) {
+            viewModel.updateNote(
+                id = 0,
+                title = binding.nameInput.text.toString(),
+                lastAccessed = "11/11/2222",
+                securityStatus = true,
+                notes = "grgbtht",
+                password = binding.passcodeInput.text.toString()
+            )
+            findNavController().navigate(
+                R.id.action_addNoteFragment_to_homeFragment
+            )
+        }
+    }
+
+    /*
+    // Binds note to view model
+    private fun bindNote(note: Notes) {
+        binding.apply{
+            nameInput.setText(note.title, TextView.BufferType.SPANNABLE)
+            sta.isChecked = forageable.inSeason
+            notesInput.setText(forageable.notes, TextView.BufferType.SPANNABLE)
+            saveBtn.setOnClickListener {
+                updateForageable()
+            }
+        }
+
+    }
+
+     */
+
     private fun isValidEntry() = viewModel.isValidEntry(
-        binding.nameInput.text.toString(),
-        binding.passcodeInput.text.toString()
+        binding.nameInput.text.toString()
     )
 }

@@ -19,9 +19,14 @@
         android:name="com.example.notesapp.fragments.AddNoteFragment"
         android:label="@string/add_note_name"
         tools:layout="@layout/fragment_add_note">
-        <argument
-            android:name="id"
-            app:argType="long"
-            android:defaultValue="0L"/>
+        <action
+            android:id="@+id/action_addNoteFragment_to_homeFragment"
+            app:destination="@id/homeFragment" >
+
+            <argument
+                android:name="id"
+                android:defaultValue="0L"
+                app:argType="long" />
+        </action>
     </fragment>
 </navigation>

@@ -11,6 +11,6 @@ data class Notes(
     val title: String,
     @ColumnInfo(name = "last_accessed") val lastAccessed: String,
     @ColumnInfo(name = "security_status") val securityStatus: Boolean,
-    val password: String?,
-    val notes: String?
+    val notes: String,
+    val password: String?
 )

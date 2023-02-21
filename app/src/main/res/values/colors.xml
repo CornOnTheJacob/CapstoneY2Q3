@@ -12,7 +12,7 @@
     <color name="green">#FF214e34</color>
     <color name="green_dark">#FF00250e</color>
     <color name="green_light">#FF4d7a5e</color>
-    <color name="cool_white">#FFf4fdff</color>
-    <color name="cool_white_dark">#FFc1cacc</color>
-    <color name="cool_white_light">#FFffffff</color>
+    <color name="lime">#FF7cb342</color>
+    <color name="lime_dark">#FFaee571</color>
+    <color name="lime_light">#FF4b830d</color>
 </resources>
