@@ -3,13 +3,19 @@ package com.example.notesapp.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.view.menu.ListMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.ItemsViewModel
 import com.example.notesapp.R
 
 class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+
+    class NotesListAdpater(
+        private var binding: ListMenuItemView
+    )
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +33,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adap
         val ItemsViewModel = mList[position]
 
         // sets the image to the imageview from our itemHolder class
-        if (ItemsViewModel.securityStatus == false) {
+        if (ItemsViewModel.passcode == "") {
             holder.lockIcon.setImageResource(R.drawable.ic_baseline_lock_open_24)
         }
 

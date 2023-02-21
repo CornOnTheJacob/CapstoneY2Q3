@@ -92,22 +92,15 @@ class AddNoteFragment : Fragment() {
         if (isValidEntry()) {
 
             // Gets current date
-            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-            val currentDate = sdf.format(Date())
-
-            // Checks which radio button is chosen (yes or no)
-            var securityStatus: Boolean = false
-            if (binding.yesSecurity.isChecked) {
-                securityStatus = true
-            }
+            //val sdf = SimpleDateFormat("dd/MM/yyyy")
+            //val currentDate = sdf.format(Date())
 
             // Adds a new note to the view model
             viewModel.addNote(
                 binding.nameInput.text.toString(),
-                currentDate,
-                securityStatus,
-                binding.passcodeInput.text.toString(),
-                "grgbtht"
+                "currentDate",
+                "grgbtht",
+                binding.passcodeInput.text.toString()
             )
 
             findNavController().navigate(
@@ -131,9 +124,8 @@ class AddNoteFragment : Fragment() {
                 id = 0,
                 title = binding.nameInput.text.toString(),
                 lastAccessed = "11/11/2222",
-                securityStatus = true,
                 notes = "grgbtht",
-                password = binding.passcodeInput.text.toString()
+                passcode = binding.passcodeInput.text.toString()
             )
             findNavController().navigate(
                 R.id.action_addNoteFragment_to_homeFragment
@@ -141,21 +133,18 @@ class AddNoteFragment : Fragment() {
         }
     }
 
-    /*
+
     // Binds note to view model
     private fun bindNote(note: Notes) {
         binding.apply{
             nameInput.setText(note.title, TextView.BufferType.SPANNABLE)
-            sta.isChecked = forageable.inSeason
-            notesInput.setText(forageable.notes, TextView.BufferType.SPANNABLE)
-            saveBtn.setOnClickListener {
+            passcodeInput.setText(note.passcode, TextView.BufferType.SPANNABLE)
+            createButton.setOnClickListener {
                 updateForageable()
             }
         }
 
     }
-
-     */
 
     private fun isValidEntry() = viewModel.isValidEntry(
         binding.nameInput.text.toString()

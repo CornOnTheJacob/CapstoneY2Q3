@@ -19,16 +19,14 @@ class NotesViewModel(
     fun addNote(
         title: String,
         lastAccessed: String,
-        securityStatus: Boolean,
         notes: String,
-        password: String?
+        passcode: String
     ) {
         val note = Notes(
             title = title,
             lastAccessed = lastAccessed,
-            securityStatus = securityStatus,
             notes = notes,
-            password = password
+            passcode = passcode
         )
 
         // Launches a coroutine and calls the DAO method to add a Notes to the database within it
@@ -42,17 +40,15 @@ class NotesViewModel(
         id: Long,
         title: String,
         lastAccessed: String,
-        securityStatus: Boolean,
         notes: String,
-        password: String
+        passcode: String
     ) {
         val note = Notes(
             id = id,
             title = title,
             lastAccessed = lastAccessed,
-            securityStatus = securityStatus,
             notes = notes,
-            password = password
+            passcode = passcode
         )
         viewModelScope.launch(Dispatchers.IO) {
             notesDao.update(note)

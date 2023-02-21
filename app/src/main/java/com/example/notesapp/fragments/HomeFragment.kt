@@ -37,19 +37,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Creates list
         val data = ArrayList<ItemsViewModel>()
         for (i in 1..20) {
-            data.add(ItemsViewModel(i.toLong(), "Note " + i, "11/11/2011", false, "ffdgfdgfd"))
+            data.add(ItemsViewModel(i.toLong(), "Note " + i, "11/11/2011", "", "ffdgfdgfd"))
         }
 
         // This will pass the ArrayList to our Adapter
-
         val adapter = CustomAdapter(data)
 
 
-
         binding.apply {
+            // Sets recycler view adpater as custom adapter data
             recyclerview.adapter = adapter
+
+            // Pulls up the add note screen
             floatingActionButton.setOnClickListener {
                 findNavController().navigate(
                     R.id.action_homeFragment_to_addNoteFragment

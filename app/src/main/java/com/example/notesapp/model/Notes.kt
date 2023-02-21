@@ -10,7 +10,6 @@ data class Notes(
     val id: Long = 0,
     val title: String,
     @ColumnInfo(name = "last_accessed") val lastAccessed: String,
-    @ColumnInfo(name = "security_status") val securityStatus: Boolean,
     val notes: String,
-    val password: String?
+    val passcode: String
 )
