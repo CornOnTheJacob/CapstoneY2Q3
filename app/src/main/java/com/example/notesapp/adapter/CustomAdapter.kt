@@ -7,53 +7,68 @@ import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.view.menu.ListMenuItemView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.ItemsViewModel
 import com.example.notesapp.R
+import com.example.notesapp.databinding.CardViewDesignBinding
+import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.model.Notes
 
-class CustomAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
-
-    class NotesListAdpater(
-        private var binding: ListMenuItemView
-    )
+class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
+    ListAdapter<Notes, CustomAdapter.ViewHolder>(DiffCallback) {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
         // that is used to hold list item
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view_design, parent, false)
-
-        return ViewHolder(view)
+        return ViewHolder(
+            CardViewDesignBinding.inflate(
+                LayoutInflater.from(
+                    parent.context
+                )
+            )
+        )
     }
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
-        val ItemsViewModel = mList[position]
-
-        // sets the image to the imageview from our itemHolder class
-        if (ItemsViewModel.passcode == "") {
-            holder.lockIcon.setImageResource(R.drawable.ic_baseline_lock_open_24)
+        val current = getItem(position)
+        holder.itemView.setOnClickListener {
+            onItemClicked(current)
         }
-
-        // sets the text to the textview from our itemHolder class
-        holder.title.text = ItemsViewModel.title
-
-        holder.lastAccessed.text = ItemsViewModel.lastAccessed
-
+        holder.bind(current)
     }
 
-    // return the number of the items in the list
-    override fun getItemCount(): Int {
-        return mList.size
-    }
 
     // Holds the views for adding it to image and text
-    class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+    class ViewHolder(private var binding: CardViewDesignBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val title: TextView = itemView.findViewById(R.id.title)
-        val lastAccessed: TextView = itemView.findViewById(R.id.lastAccessed)
-        val lockIcon: ImageView = itemView.findViewById(R.id.lockIcon)
+        fun bind(note: Notes) {
+            binding.apply {
+                title.text = note.title
+                lastAccessed.text = note.lastAccessed
+                if (note.passcode == "") {
+                    lockIcon.setImageResource(R.drawable.ic_baseline_lock_open_24)
+                }
+                else {
+                    lockIcon.setImageResource(android.R.drawable.ic_lock_lock)
+                }
+
+            }
+        }
+    }
+
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Notes>() {
+            override fun areItemsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
+                return oldNotes === newNotes
+            }
+
+            override fun areContentsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
+                return oldNotes.title == oldNotes.title
+            }
+        }
     }
 }

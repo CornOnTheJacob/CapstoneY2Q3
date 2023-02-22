@@ -23,40 +23,33 @@ class HomeFragment : Fragment() {
     }
 
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Creates list
-        val data = ArrayList<ItemsViewModel>()
-        for (i in 1..20) {
-            data.add(ItemsViewModel(i.toLong(), "Note " + i, "11/11/2011", "", "ffdgfdgfd"))
+        val adapter = CustomAdapter {
+            val action = R.id.action_addNoteFragment_to_homeFragment
+            this.findNavController().navigate(action)
         }
-
-        // This will pass the ArrayList to our Adapter
-        val adapter = CustomAdapter(data)
-
-
-        binding.apply {
-            // Sets recycler view adpater as custom adapter data
-            recyclerview.adapter = adapter
-
-            // Pulls up the add note screen
-            floatingActionButton.setOnClickListener {
-                findNavController().navigate(
-                    R.id.action_homeFragment_to_addNoteFragment
-                )
+        binding.recyclerview.adapter = adapter
+        viewModel.allNotes.observe(this.viewLifecycleOwner) {items ->
+            items.let {
+                adapter.submitList(it)
             }
+        }
+        binding.recyclerview.layoutManager = LinearLayoutManager(this.context)
+        binding.floatingActionButton.setOnClickListener {
+            val action = R.id.action_addNoteFragment_to_homeFragment
+            this.findNavController().navigate(action)
         }
     }
 }

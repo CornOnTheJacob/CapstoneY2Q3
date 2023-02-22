@@ -11,7 +11,7 @@ class NotesViewModel(
     private val notesDao: NotesDao
 ) : ViewModel() {
     // Retrieves all notes from the Dao
-    val notes: LiveData<List<Notes>> = notesDao.getNotes().asLiveData()
+    val allNotes: LiveData<List<Notes>> = notesDao.getNotes().asLiveData()
     // Retrieves a note from the Dao
     fun getById(id: Long): LiveData<Notes> = notesDao.getById(id).asLiveData()
 

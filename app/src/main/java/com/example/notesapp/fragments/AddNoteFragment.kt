@@ -25,7 +25,6 @@ import java.util.*
 import androidx.navigation.fragment.navArgs
 import kotlin.collections.ArrayList
 
-
 /*
     Fragment that adds new notes to the view model
  */
@@ -63,28 +62,6 @@ class AddNoteFragment : Fragment() {
         binding.createButton.setOnClickListener {
             addNote()
         }
-        /*
-        val data = ArrayList<ItemsViewModel>()
-        for (i in 1..20) {
-            data.add(ItemsViewModel(i.toLong(), "Note " + i, "11/11/2011", false, "ffdgfdgfd"))
-        }
-
-        // This will pass the ArrayList to our Adapter
-
-        val adapter = CustomAdapter(data)
-
-
-
-        binding.apply {
-            recyclerview.adapter = adapter
-            floatingActionButton.setOnClickListener {
-                findNavController().navigate(
-                    R.id.action_homeFragment_to_addNoteFragment
-                )
-            }
-        }
-
-         */
     }
 
     // Function adds note to view model

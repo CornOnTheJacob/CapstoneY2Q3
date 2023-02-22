@@ -8,8 +8,12 @@ import androidx.room.PrimaryKey
 data class Notes(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
+    @ColumnInfo(name = "title")
     val title: String,
-    @ColumnInfo(name = "last_accessed") val lastAccessed: String,
+    @ColumnInfo(name = "last_accessed")
+    val lastAccessed: String,
+    @ColumnInfo(name = "notes")
     val notes: String,
+    @ColumnInfo(name = "passcode")
     val passcode: String
 )

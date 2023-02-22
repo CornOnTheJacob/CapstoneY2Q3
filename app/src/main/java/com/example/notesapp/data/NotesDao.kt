@@ -19,8 +19,10 @@ interface NotesDao {
     // Three functions that edit data
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: Notes)
+
     @Update
     suspend fun update(note: Notes)
+
     @Delete
     suspend fun delete(note: Notes)
 }
