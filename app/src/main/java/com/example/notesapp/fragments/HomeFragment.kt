@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = CustomAdapter {
-            val action = R.id.action_addNoteFragment_to_homeFragment
+            val action = R.id.action_homeFragment_to_addNoteFragment
             this.findNavController().navigate(action)
         }
         binding.recyclerview.adapter = adapter
@@ -48,7 +48,7 @@ class HomeFragment : Fragment() {
         }
         binding.recyclerview.layoutManager = LinearLayoutManager(this.context)
         binding.floatingActionButton.setOnClickListener {
-            val action = R.id.action_addNoteFragment_to_homeFragment
+            val action = R.id.action_homeFragment_to_addNoteFragment
             this.findNavController().navigate(action)
         }
     }

@@ -58,6 +58,20 @@ class AddNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.yesSecurity.setOnClickListener {
+            binding.apply {
+                passcodeTitle.visibility = View.VISIBLE
+                passcodeInput.visibility = View.VISIBLE
+            }
+        }
+
+        binding.noSecurity.setOnClickListener {
+            binding.apply {
+                passcodeTitle.visibility = View.INVISIBLE
+                passcodeInput.visibility = View.INVISIBLE
+            }
+        }
+
         // Adds a new note when the create button is clicked
         binding.createButton.setOnClickListener {
             addNote()
