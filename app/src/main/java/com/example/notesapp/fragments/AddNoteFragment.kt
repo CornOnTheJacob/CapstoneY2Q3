@@ -30,14 +30,13 @@ import kotlin.collections.ArrayList
  */
 class AddNoteFragment : Fragment() {
 
-    private lateinit var notes: Notes
+    private val navigationArgs: AddNoteFragmentArgs by navArgs()
 
     // Sets up fragment binding
     private var _binding: FragmentAddNoteBinding? = null
     private val binding get() = _binding!!
 
-    //private val navigationArgs: AddNoteFragmentArgs by navArgs()
-
+    private lateinit var notes: Notes
 
     // Refactor creation of view model to take an instance of NotesViewModelFactory
     private val viewModel: NotesViewModel by activityViewModels {
@@ -57,24 +56,38 @@ class AddNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.yesSecurity.setOnClickListener {
-            binding.apply {
-                passcodeTitle.visibility = View.VISIBLE
-                passcodeInput.visibility = View.VISIBLE
+        val id = navigationArgs.id
+        if (id > 0) {
+            viewModel.getById(id).observe(viewLifecycleOwner) {
+                notes = it
+                bindNote(it)
             }
-        }
 
-        binding.noSecurity.setOnClickListener {
-            binding.apply {
-                passcodeTitle.visibility = View.INVISIBLE
-                passcodeInput.visibility = View.INVISIBLE
+            binding.deleteButton.visibility = View.VISIBLE
+            binding.deleteButton.setOnClickListener {
+                deleteNote(notes)
             }
-        }
+        } else {
 
-        // Adds a new note when the create button is clicked
-        binding.createButton.setOnClickListener {
-            addNote()
+
+            binding.yesSecurity.setOnClickListener {
+                binding.apply {
+                    passcodeTitle.visibility = View.VISIBLE
+                    passcodeInput.visibility = View.VISIBLE
+                }
+            }
+
+            binding.noSecurity.setOnClickListener {
+                binding.apply {
+                    passcodeTitle.visibility = View.INVISIBLE
+                    passcodeInput.visibility = View.INVISIBLE
+                }
+            }
+
+            // Adds a new note when the create button is clicked
+            binding.createButton.setOnClickListener {
+                addNote()
+            }
         }
     }
 

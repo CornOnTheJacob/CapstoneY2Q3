@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+        <variable
+            name="mainBody"
+            type="com.example.notesapp.data.NotesDatabase" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.NoteDetailFragment">
+
+        <EditText
+            android:id="@+id/text"
+            android:layout_width="364dp"
+            android:layout_height="581dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Enter Text..."
+            android:inputType="textMultiLine"
+            android:maxLines="26"
+            android:text="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
