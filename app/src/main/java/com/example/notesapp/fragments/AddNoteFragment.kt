@@ -96,13 +96,13 @@ class AddNoteFragment : Fragment() {
         if (isValidEntry()) {
 
             // Gets current date
-            //val sdf = SimpleDateFormat("dd/MM/yyyy")
-            //val currentDate = sdf.format(Date())
+            val sdf = SimpleDateFormat("MM/dd/yyyy")
+            val currentDate = "Last Accessed: " + sdf.format(Date())
 
             // Adds a new note to the view model
             viewModel.addNote(
                 binding.nameInput.text.toString(),
-                "currentDate",
+                currentDate,
                 "grgbtht",
                 binding.passcodeInput.text.toString()
             )
