@@ -60,15 +60,15 @@ class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
         }
     }
 
-    companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<Notes>() {
-            override fun areItemsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
-                return oldNotes === newNotes
-            }
 
-            override fun areContentsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
-                return oldNotes.title == oldNotes.title
-            }
+    companion object DiffCallback: DiffUtil.ItemCallback<Notes>() {
+        override fun areItemsTheSame(oldItem: Notes, newItem: Notes): Boolean {
+            return oldItem.id == newItem.id
         }
+
+        override fun areContentsTheSame(oldItem: Notes, newItem: Notes): Boolean {
+            return oldItem == newItem
+        }
+
     }
 }

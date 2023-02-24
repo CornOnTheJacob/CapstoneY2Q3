@@ -1,4 +1,4 @@
-package com.example.notesapp
+package com.example.notesapp.viewmodel
 
 import androidx.lifecycle.*
 import com.example.notesapp.data.NotesDao

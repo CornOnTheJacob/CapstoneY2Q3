@@ -5,25 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.notesapp.adapter.CustomAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notesapp.*
 import com.example.notesapp.databinding.FragmentAddNoteBinding
-import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.model.Notes
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
-import androidx.navigation.fragment.navArgs
-import kotlin.collections.ArrayList
+import com.example.notesapp.viewmodel.NotesViewModel
+import com.example.notesapp.viewmodel.NotesViewModelFactory
 
 /*
     Fragment that adds new notes to the view model
@@ -49,7 +41,6 @@ class AddNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }

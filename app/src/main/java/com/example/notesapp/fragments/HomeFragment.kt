@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.notesapp.adapter.CustomAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.*
 import com.example.notesapp.databinding.FragmentHomeBinding
+import com.example.notesapp.viewmodel.NotesViewModel
+import com.example.notesapp.viewmodel.NotesViewModelFactory
 
 class HomeFragment : Fragment() {
     private val viewModel: NotesViewModel by activityViewModels {
