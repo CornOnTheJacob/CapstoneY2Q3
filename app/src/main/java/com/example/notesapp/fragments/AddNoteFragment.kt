@@ -60,24 +60,25 @@ class AddNoteFragment : Fragment() {
             }
         } else {
 
-
-            binding.yesSecurity.setOnClickListener {
-                binding.apply {
-                    passcodeTitle.visibility = View.VISIBLE
-                    passcodeInput.visibility = View.VISIBLE
-                }
-            }
-
-            binding.noSecurity.setOnClickListener {
-                binding.apply {
-                    passcodeTitle.visibility = View.INVISIBLE
-                    passcodeInput.visibility = View.INVISIBLE
-                }
-            }
-
             // Adds a new note when the create button is clicked
             binding.createButton.setOnClickListener {
                 addNote()
+            }
+        }
+
+        // Displays passcode setting options
+        binding.yesSecurity.setOnClickListener {
+            binding.apply {
+                passcodeTitle.visibility = View.VISIBLE
+                passcodeInput.visibility = View.VISIBLE
+            }
+        }
+
+        // Hides passcode setting options
+        binding.noSecurity.setOnClickListener {
+            binding.apply {
+                passcodeTitle.visibility = View.INVISIBLE
+                passcodeInput.visibility = View.INVISIBLE
             }
         }
     }
@@ -94,7 +95,7 @@ class AddNoteFragment : Fragment() {
             viewModel.addNote(
                 binding.nameInput.text.toString(),
                 currentDate,
-                "grgbtht",
+                "",
                 binding.passcodeInput.text.toString()
             )
 
@@ -115,11 +116,14 @@ class AddNoteFragment : Fragment() {
     // Updates note in view model
     private fun updateForageable() {
         if (isValidEntry()) {
+            viewModel.getById(navigationArgs.id).observe(viewLifecycleOwner) {
+                notes = it
+            }
             viewModel.updateNote(
-                id = 0,
+                id = navigationArgs.id,
                 title = binding.nameInput.text.toString(),
-                lastAccessed = "11/11/2222",
-                notes = "grgbtht",
+                lastAccessed = "Last Accessed: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
+                notes = notes.notes,
                 passcode = binding.passcodeInput.text.toString()
             )
             findNavController().navigate(

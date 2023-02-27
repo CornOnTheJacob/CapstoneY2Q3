@@ -15,6 +15,8 @@ import com.example.notesapp.viewmodel.NotesViewModel
 import com.example.notesapp.viewmodel.NotesViewModelFactory
 import com.example.notesapp.databinding.FragmentNoteDetailBinding
 import com.example.notesapp.model.Notes
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * This fragment displays the information in of the notes and allow the user to enter their notes
@@ -34,8 +36,8 @@ class NoteDetailFragment : Fragment() {
     private lateinit var notes: Notes
 
     // Fragment binding
-    private var _binding: FragmentNoteDetailBinding? = null
-    private val binding get() = _binding!!
+    public var _binding: FragmentNoteDetailBinding? = null
+    public val bindingDetail get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +45,7 @@ class NoteDetailFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-        return binding.root
+        return bindingDetail.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,14 +64,22 @@ class NoteDetailFragment : Fragment() {
 
     // Custom function for binding the data from the database to the fragment
     private fun bindNote() {
-        binding.apply {
+        bindingDetail.apply {
             if (notes.notes.isBlank()) {
-                text.setText("x")
+                text.setText("")
             } else {
                 text.setText(notes.notes)
             }
 
             editButton.setOnClickListener {
+                viewModel.updateNote(
+                    id = navigationArgs.id,
+                    title = notes.title,
+                    lastAccessed = "Last Accessed: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
+                    notes = text.text.toString(),
+                    passcode = notes.passcode
+                )
+
                 val action = NoteDetailFragmentDirections
                     .actionNoteDetailFragmentToAddNoteFragment(notes.id)
                 findNavController().navigate(action)
