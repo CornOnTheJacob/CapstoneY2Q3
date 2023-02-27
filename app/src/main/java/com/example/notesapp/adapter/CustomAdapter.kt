@@ -20,8 +20,6 @@ import com.example.notesapp.model.Notes
 class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
     ListAdapter<Notes, CustomAdapter.ViewHolder>(DiffCallback) {
 
-    public var chosenId: Int = 1
-
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view

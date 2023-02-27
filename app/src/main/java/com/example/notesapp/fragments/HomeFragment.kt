@@ -26,7 +26,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-
         // Inflates layout
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +38,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bundle = Bundle()
         val adapter = CustomAdapter { notes ->
             val action = HomeFragmentDirections
                 .actionHomeFragmentToNoteDetailFragment(notes.id)
