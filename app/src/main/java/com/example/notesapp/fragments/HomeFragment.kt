@@ -26,6 +26,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
+
+        // Inflates layout
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,13 +38,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = CustomAdapter {
-            val action = R.id.action_homeFragment_to_noteDetailFragment
-            this.findNavController().navigate(action)
+
+        val bundle = Bundle()
+        val adapter = CustomAdapter { notes ->
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToNoteDetailFragment(notes.id)
+            this.findNavController().navigate(action, )
         }
         binding.recyclerview.adapter = adapter
 
-        //
         viewModel.allNotes.observe(this.viewLifecycleOwner) {items ->
             items.let {
                 adapter.submitList(it)

@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notesapp.BaseApplication
+import com.example.notesapp.adapter.CustomAdapter
 import com.example.notesapp.viewmodel.NotesViewModel
 import com.example.notesapp.viewmodel.NotesViewModelFactory
 import com.example.notesapp.databinding.FragmentNoteDetailBinding
@@ -34,8 +36,6 @@ class NoteDetailFragment : Fragment() {
     // Fragment binding
     private var _binding: FragmentNoteDetailBinding? = null
     private val binding get() = _binding!!
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +68,12 @@ class NoteDetailFragment : Fragment() {
             } else {
                 text.setText(notes.notes)
             }
-            text.visibility = View.INVISIBLE
+
+            editButton.setOnClickListener {
+                val action = NoteDetailFragmentDirections
+                    .actionNoteDetailFragmentToAddNoteFragment(notes.id)
+                findNavController().navigate(action)
+            }
         }
     }
 }

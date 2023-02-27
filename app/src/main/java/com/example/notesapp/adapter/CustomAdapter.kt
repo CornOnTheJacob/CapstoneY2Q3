@@ -1,5 +1,6 @@
 package com.example.notesapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ import com.example.notesapp.model.Notes
 class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
     ListAdapter<Notes, CustomAdapter.ViewHolder>(DiffCallback) {
 
+    public var chosenId: Int = 1
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -35,15 +38,19 @@ class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val current = getItem(position)
+        holder.bind(current)
+
         holder.itemView.setOnClickListener {
             onItemClicked(current)
+            //chosenId = position + 1
         }
-        holder.bind(current)
     }
 
 
     // Holds the views for adding it to image and text
-    class ViewHolder(private var binding: CardViewDesignBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        private var binding: CardViewDesignBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(note: Notes) {
             binding.apply {
@@ -61,6 +68,20 @@ class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
     }
 
 
+    /*
+    companion object {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Notes>() {
+            override fun areItemsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
+                return oldNotes === newNotes
+            }
+
+            override fun areContentsTheSame(oldNotes: Notes, newNotes: Notes): Boolean {
+                return oldNotes.title == oldNotes.title
+            }
+        }
+    }
+
+     */
     companion object DiffCallback: DiffUtil.ItemCallback<Notes>() {
         override fun areItemsTheSame(oldItem: Notes, newItem: Notes): Boolean {
             return oldItem.id == newItem.id
