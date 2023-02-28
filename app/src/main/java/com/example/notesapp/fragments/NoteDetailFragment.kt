@@ -37,8 +37,8 @@ class NoteDetailFragment : Fragment() {
     private lateinit var notes: Notes
 
     // Fragment binding
-    public var _binding: FragmentNoteDetailBinding? = null
-    public val binding get() = _binding!!
+    private var _binding: FragmentNoteDetailBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +76,7 @@ class NoteDetailFragment : Fragment() {
                 viewModel.updateNote(
                     id = navigationArgs.id,
                     title = notes.title,
-                    lastAccessed = "Last Accessed: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
+                    lastAccessed = "Last Edited: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
                     notes = text.text.toString(),
                     passcode = notes.passcode
                 )

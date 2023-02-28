@@ -4,7 +4,7 @@ import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import com.example.notesapp.model.Notes
 
-// A Dao for database interactions
+// A Dao for notes database interactions
 @Dao
 interface NotesDao {
 

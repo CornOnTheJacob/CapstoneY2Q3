@@ -22,12 +22,14 @@ import com.example.notesapp.viewmodel.NotesViewModelFactory
  */
 class AddNoteFragment : Fragment() {
 
+    // Variable containing an argument from the note detail fragment
     private val navigationArgs: AddNoteFragmentArgs by navArgs()
 
     // Sets up fragment binding
     private var _binding: FragmentAddNoteBinding? = null
     private val binding get() = _binding!!
 
+    // Variable to be used to contain the note that will be used in the future
     private lateinit var notes: Notes
 
     // Refactor creation of view model to take an instance of NotesViewModelFactory
@@ -41,19 +43,24 @@ class AddNoteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         _binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val id = navigationArgs.id
+
+        // Changes layout when entering to edit a note
         if (id > 0) {
             viewModel.getById(id).observe(viewLifecycleOwner) {
                 notes = it
                 bindNote(it)
             }
 
+            binding.createButton.text = "Submit"
             binding.deleteButton.visibility = View.VISIBLE
             binding.deleteButton.setOnClickListener {
                 deleteNote(notes)
@@ -79,6 +86,7 @@ class AddNoteFragment : Fragment() {
             binding.apply {
                 passcodeTitle.visibility = View.INVISIBLE
                 passcodeInput.visibility = View.INVISIBLE
+                passcodeInput.text = null
             }
         }
     }
@@ -89,7 +97,7 @@ class AddNoteFragment : Fragment() {
 
             // Gets current date
             val sdf = SimpleDateFormat("MM/dd/yyyy")
-            val currentDate = "Last Accessed: " + sdf.format(Date())
+            val currentDate = "Last Edited: " + sdf.format(Date())
 
             // Adds a new note to the view model
             viewModel.addNote(
@@ -99,9 +107,8 @@ class AddNoteFragment : Fragment() {
                 binding.passcodeInput.text.toString()
             )
 
-            findNavController().navigate(
-                R.id.action_addNoteFragment_to_homeFragment
-            )
+            // Navigates to home fragment
+            findNavController().navigate(R.id.action_addNoteFragment_to_homeFragment)
         }
     }
 
@@ -122,7 +129,7 @@ class AddNoteFragment : Fragment() {
             viewModel.updateNote(
                 id = navigationArgs.id,
                 title = binding.nameInput.text.toString(),
-                lastAccessed = "Last Accessed: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
+                lastAccessed = "Last Edited: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
                 notes = notes.notes,
                 passcode = binding.passcodeInput.text.toString()
             )
@@ -145,6 +152,7 @@ class AddNoteFragment : Fragment() {
 
     }
 
+    // Checks if valid entry
     private fun isValidEntry() = viewModel.isValidEntry(
         binding.nameInput.text.toString()
     )

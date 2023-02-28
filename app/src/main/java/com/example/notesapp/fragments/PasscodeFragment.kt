@@ -36,8 +36,8 @@ class PasscodeFragment : Fragment() {
     private lateinit var notes: Notes
 
     // Fragment binding
-    public var _binding: FragmentPasscodeBinding? = null
-    public val binding get() = _binding!!
+    private var _binding: FragmentPasscodeBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
@@ -51,6 +51,7 @@ class PasscodeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // Binds data from database to corresponding values by id
         val id = navigationArgs.id
         viewModel.getById(id).observe(viewLifecycleOwner) {
