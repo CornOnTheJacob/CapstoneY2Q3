@@ -40,7 +40,6 @@ class CustomAdapter(private val onItemClicked: (Notes) -> Unit) :
 
         holder.itemView.setOnClickListener {
             onItemClicked(current)
-            //chosenId = position + 1
         }
     }
 

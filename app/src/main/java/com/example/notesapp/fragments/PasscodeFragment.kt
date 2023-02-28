@@ -1,7 +1,7 @@
 package com.example.notesapp.fragments
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,18 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.notesapp.BaseApplication
-import com.example.notesapp.adapter.CustomAdapter
+import com.example.notesapp.R
+import com.example.notesapp.databinding.FragmentNoteDetailBinding
+import com.example.notesapp.databinding.FragmentPasscodeBinding
+import com.example.notesapp.model.Notes
 import com.example.notesapp.viewmodel.NotesViewModel
 import com.example.notesapp.viewmodel.NotesViewModelFactory
-import com.example.notesapp.databinding.FragmentNoteDetailBinding
-import com.example.notesapp.model.Notes
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * This fragment displays the information in of the notes and allow the user to enter their notes
- */
-class NoteDetailFragment : Fragment() {
+
+class PasscodeFragment : Fragment() {
 
     // Variable containing an argument from the note detail fragment
     private val navigationArgs: NoteDetailFragmentArgs by navArgs()
@@ -37,21 +36,21 @@ class NoteDetailFragment : Fragment() {
     private lateinit var notes: Notes
 
     // Fragment binding
-    public var _binding: FragmentNoteDetailBinding? = null
+    public var _binding: FragmentPasscodeBinding? = null
     public val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
+        _binding = FragmentPasscodeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Binds data from database to corresponding values by id
         val id = navigationArgs.id
         viewModel.getById(id).observe(viewLifecycleOwner) {
@@ -63,27 +62,22 @@ class NoteDetailFragment : Fragment() {
         }
     }
 
-    // Custom function for binding the data from the database to the fragment
     private fun bindNote() {
         binding.apply {
-            if (notes.notes.isBlank()) {
-                text.setText("")
-            } else {
-                text.setText(notes.notes)
-            }
 
-            editButton.setOnClickListener {
-                viewModel.updateNote(
-                    id = navigationArgs.id,
-                    title = notes.title,
-                    lastAccessed = "Last Accessed: " + SimpleDateFormat("MM/dd/yyyy").format(Date()),
-                    notes = text.text.toString(),
-                    passcode = notes.passcode
-                )
-
-                val action = NoteDetailFragmentDirections
-                    .actionNoteDetailFragmentToAddNoteFragment(notes.id)
-                findNavController().navigate(action)
+            enterButton.setOnClickListener {
+                // Correct passcode entry
+                if (codeInput.text.toString() == notes.passcode) {
+                    codeInput.text = null
+                    var action = PasscodeFragmentDirections
+                        .actionPasscodeFragmentToNoteDetailFragment(notes.id)
+                    findNavController().navigate(action)
+                }
+                // Incorrect passcode entry
+                else {
+                    codeInput.text = null
+                    codeInput.setBackgroundColor(Color.RED)
+                }
             }
         }
     }

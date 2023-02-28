@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notesapp.adapter.CustomAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.example.notesapp.*
 import com.example.notesapp.databinding.FragmentHomeBinding
@@ -38,10 +39,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var action: NavDirections
         val adapter = CustomAdapter { notes ->
-            val action = HomeFragmentDirections
-                .actionHomeFragmentToNoteDetailFragment(notes.id)
-            this.findNavController().navigate(action, )
+
+            // If there is no passcode goes to details
+            if (notes.passcode == "") {
+                action = HomeFragmentDirections
+                    .actionHomeFragmentToNoteDetailFragment(notes.id)
+            }
+            // If there is a passcode goes to passcode checker
+            else {
+                action = HomeFragmentDirections
+                    .actionHomeFragmentToPasscodeFragment(notes.id)
+            }
+
+            this.findNavController().navigate(action)
         }
         binding.recyclerview.adapter = adapter
 

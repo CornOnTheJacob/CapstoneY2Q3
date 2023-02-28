@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_noteDetailFragment"
             app:destination="@id/noteDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_passcodeFragment"
+            app:destination="@id/passcodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNoteFragment"
@@ -52,5 +55,18 @@
         <action
             android:id="@+id/action_noteDetailFragment_to_addNoteFragment"
             app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passcodeFragment"
+        android:name="com.example.notesapp.fragments.PasscodeFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_passcode">
+        <argument
+            android:name="id"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_passcodeFragment_to_noteDetailFragment"
+            app:destination="@id/noteDetailFragment" />
     </fragment>
 </navigation>
