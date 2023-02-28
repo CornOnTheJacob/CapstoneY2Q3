@@ -4,9 +4,9 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class Helper(context: Context): SQLiteOpenHelper(context, "Login", null, 1) {
+class LoginDatabase(context: Context): SQLiteOpenHelper(context, "Login", null, 1) {
 
-    // creating database
+    // Creating database
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL("CREATE TABLE LoginData(Username TEXT, Password TEXT)")
     }

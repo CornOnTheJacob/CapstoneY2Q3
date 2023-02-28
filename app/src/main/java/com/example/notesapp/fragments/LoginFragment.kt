@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.notesapp.R
-import com.example.notesapp.databinding.FragmentHomeBinding
 import com.example.notesapp.databinding.FragmentLoginBinding
 
 // TODO: Rename parameter arguments, choose names that match
